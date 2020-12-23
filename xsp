@@ -1,0 +1,7 @@
+# Running piclone over SSH for remote Rasbperry Pi
+
+1. Setup xfowarding
+2. SSH into device
+3. xauth list 
+4. sudo xauth add <list results>
+5. sudo dbus-launch piclone
