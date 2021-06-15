@@ -1,11 +1,11 @@
-## ENABLE UBUNTU REPO
+## ENABLE UBUNTU REPO for KONG
 ```
 echo "deb [trusted=yes] https://download.konghq.com/gateway-2.x-ubuntu-$(lsb_release -sc)/ default all" | sudo tee /etc/apt/sources.list.d/kong.list 
 sudo apt-get update
 sudo apt install -y kong
 ```
 
-## DATABASE INSTALL
+## DATABASE INSTALL on SYSTEM
 
 By default, uses a local system account (ident role).  The installation procedure created a user account called postgres that is associated with the default Postgres role. In order to use Postgres, you can log into that account.
 ```
@@ -28,12 +28,12 @@ To access the shell without switching accounts
 sudo -u postgres psql
 ```
 
+## CONFIGURE DATABASE for KONG
+
 Create a user, database, and set password for the operating database
 ```
 create user kong; create database kong OWNER kong; alter user kong passowrd '<yourpassword>';
 ```
-
-## CONFIGURE DATABASE for KONG
 
 Copy the /etc/kong/kong.conf.default to /etc/kong/kong.conf
 ```
@@ -46,20 +46,26 @@ After running this, update the permissions to kong:kong on /usr/local/kong
 
 ```
 sudo kong migrations bootstrap -c /etc/kong/kong.conf
+sudo chown -Rf kong:kong /usr/local/kong
 ```
-Check tables for kong (connect as kong)
+
+Verify tables installed (connect as kong)
 ```
 \c kong
 \dt
 ```
+
+## CONFIGURE SYSTEM for KONG
+
 We are using the system user kong to run the job.  ulimits need to be updated in /etc/security limits.  The number must exceed 4096 for kong.
 ```
 kong		hard	nofile		8192
 kong		soft	nofile		8192
 ```
+
 Enable the changes
 ```
-systctl -p
+sudo systctl -p
 ```
 
 Switch to kong user and verify ulimits
