@@ -33,9 +33,10 @@ CREATE USER kong; CREATE DATABASE kong OWNER kong;
 Copy the /etc/kong/kong.conf.default to /etc/kong/kong.conf
 ```
 sudo cp /etc/kong/kong.conf.default /etc/kong/kong.conf
+```
 Update file with postgreql options
 
-Run the Kong migrations
+Run the Kong migrations.  Permission denied errors can be linked to non-sudo running of the command.  Unless you add postgresql to the sudoers, you will need to run as another user.
 ```
-kong migrations bootstrap -c /etc/kong/kong.conf]
+sudo kong migrations bootstrap -c /etc/kong/kong.conf
 ```
