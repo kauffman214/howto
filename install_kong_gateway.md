@@ -1,12 +1,12 @@
-##UBUNTU REPO
+## ENABLE UBUNTU REPO
 ```
 echo "deb [trusted=yes] https://download.konghq.com/gateway-2.x-ubuntu-$(lsb_release -sc)/ default all" | sudo tee /etc/apt/sources.list.d/kong.list 
 sudo apt-get update
 sudo apt install -y kong
 ```
 
+## DATABASE INSTALL
 
-##SUPPORTING DB (postgresql)
 By default, uses a local system account (ident role).  The installation procedure created a user account called postgres that is associated with the default Postgres role. In order to use Postgres, you can log into that account.
 ```
 sudo apt-get install postgresql postgresql-contrib
@@ -29,6 +29,8 @@ Create a user, database, and set password for the operating database
 ```
 create user kong; create database kong OWNER kong; alter user kong passowrd '<yourpassword>';
 ```
+
+## CONFIGURE DATABASE for KONG
 
 Copy the /etc/kong/kong.conf.default to /etc/kong/kong.conf
 ```
@@ -57,9 +59,15 @@ Enable the changes
 systctl -p
 ```
 
-Startup kong and verify it is running
+Switch to kong user and verify ulimits
 ```
 sudo su - kong
+ulimit -Sn
+ulimit -Hn
+```
+
+Startup kong and verify it is running
+```
 kong start -c /etc/kong/kong.conf
 curl -i http://localhost:8001/
 kong stop
