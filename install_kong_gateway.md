@@ -25,9 +25,9 @@ To access the shell without switching accounts
 sudo -u postgres psql
 ```
 
-Create a user and dataabse for the service
+Create a user, database, and set password for the operating database
 ```
-CREATE USER kong; CREATE DATABASE kong OWNER kong;
+create user kong; create database kong OWNER kong; alter user kong passowrd '<yourpassword>';
 ```
 
 Copy the /etc/kong/kong.conf.default to /etc/kong/kong.conf
