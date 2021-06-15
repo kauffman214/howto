@@ -1,4 +1,4 @@
-`UBUNTU REPO`
+##UBUNTU REPO
 ```
 echo "deb [trusted=yes] https://download.konghq.com/gateway-2.x-ubuntu-$(lsb_release -sc)/ default all" | sudo tee /etc/apt/sources.list.d/kong.list 
 sudo apt-get update
@@ -6,7 +6,7 @@ sudo apt install -y kong
 ```
 
 
-SUPPORTING DB (postgresql)
+##SUPPORTING DB (postgresql)
 By default, uses a local system account (ident role).  The installation procedure created a user account called postgres that is associated with the default Postgres role. In order to use Postgres, you can log into that account.
 ```
 sudo apt-get install postgresql postgresql-contrib
