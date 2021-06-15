@@ -4,6 +4,13 @@ echo "deb [trusted=yes] https://download.konghq.com/gateway-2.x-ubuntu-$(lsb_rel
 sudo apt-get update
 sudo apt install -y kong
 ```
+Update the home directory created by this install.
+```
+sudo cp -r /etc/skel/. /home/kong/.
+sudo chown -R kong:kong /home/kong
+sudo chmod -R go=u,go-w /home/kong/.
+sudo chmod go= /home/kong
+```
 
 ## DATABASE INSTALL on SYSTEM
 
