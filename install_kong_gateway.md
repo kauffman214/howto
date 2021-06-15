@@ -37,6 +37,61 @@ sudo cp /etc/kong/kong.conf.default /etc/kong/kong.conf
 Update file with postgreql options
 
 Run the Kong migrations.  Permission denied errors can be linked to non-sudo running of the command.  Unless you add postgresql to the sudoers, you will need to run as another user.
+After running this, update the permissions to kong:kong on /usr/local/kong
+
 ```
 sudo kong migrations bootstrap -c /etc/kong/kong.conf
 ```
+Check tables for kong (connect as kong)
+```
+\c kong
+\dt
+```
+We are using the system user kong to run the job.  ulimits need to be updated in /etc/security limits.  The number must exceed 4096 for kong.
+```
+kong		hard	nofile		8192
+kong		soft	nofile		8192
+```
+Enable the changes
+```
+systctl -p
+```
+
+Startup kong and verify it is running
+```
+sudo su - kong
+kong start -c /etc/kong/kong.conf
+curl -i http://localhost:8001/
+kong stop
+curl -i http://localhost:8001/
+```
+
+Setup the system job to start kong.  Create /etc/systemd/system/kong.service
+Note: make sure to update DefaultLimitNOFILE to what you set in ulimits
+```
+[Unit]
+Description="Kong service"
+After=syslog.target network.target
+
+[Service]
+User=kong
+Group=kong
+Type=forking
+ExecStart=/usr/local/bin/kong start -c /etc/kong/kong.conf
+ExecStop=/usr/local/bin/kong stop 
+ExecReload=/usr/local/bin/kong reload -c /etc/kong/kong.conf
+ExecStop=/usr/local/bin/kong stop
+DefaultLimitNOFILE=8196
+
+[Install]
+WantedBy=multi-user.target
+```
+Reload systemd, enable the service, start the service, and verify
+```
+sudo systemctl daemon-reload
+sudo systemctl enable kong
+sudo systemctl start kong
+curl -i http://localhost:8001/
+```
+
+
