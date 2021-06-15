@@ -37,18 +37,20 @@ sudo -u postgres psql
 
 ## CONFIGURE DATABASE for KONG
 
+### Create database objects
 Create a user, database, and set password for the operating database
 ```
 create user kong; create database kong OWNER kong; alter user kong passowrd '<yourpassword>';
 ```
-
+### Configure kong for database installation
 Copy the /etc/kong/kong.conf.default to /etc/kong/kong.conf
 ```
 sudo cp /etc/kong/kong.conf.default /etc/kong/kong.conf
 ```
 Update file with postgreql options
 
-Run the Kong migrations.  Permission denied errors can be linked to non-sudo running of the command.  Unless you add postgresql to the sudoers, you will need to run as another user.
+Run the Kong migrations.  
+Permission denied errors can be linked to non-sudo running of the command.  Unless you add postgresql to the sudoers, you will need to run as another user.
 After running this, update the permissions to kong:kong on /usr/local/kong
 
 ```
@@ -64,6 +66,7 @@ Verify tables installed (connect as kong)
 
 ## CONFIGURE SYSTEM for KONG
 
+### Update system limits for the daemon user: kong
 We are using the system user kong to run the job.  ulimits need to be updated in /etc/security limits.  The number must exceed 4096 for kong.
 ```
 kong		hard	nofile		8192
@@ -82,6 +85,8 @@ ulimit -Sn
 ulimit -Hn
 ```
 
+### Confirm that kong can run
+
 Startup kong and verify it is running
 ```
 kong start -c /etc/kong/kong.conf
@@ -90,6 +95,7 @@ kong stop
 curl -i http://localhost:8001/
 ```
 
+### Configure system service
 Setup the system job to start kong.  Create /etc/systemd/system/kong.service
 Note: make sure to update DefaultLimitNOFILE to what you set in ulimits
 ```
