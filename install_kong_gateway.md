@@ -75,7 +75,7 @@ kong		soft	nofile		8192
 
 Enable the changes
 ```
-sudo systctl -p
+sudo sysctl -p
 ```
 
 Switch to kong user and verify ulimits
