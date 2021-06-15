@@ -11,14 +11,17 @@ By default, uses a local system account (ident role).  The installation procedur
 ```
 sudo apt-get install postgresql postgresql-contrib
 ```
+
 Shell over the postgresql account
-````
+```
 sudo -i -u postgres
 ```
+
 Enter postgresql shell
 ```
 psql
 ```
+
 To exit the shell use \q
 To access the shell without switching accounts
 ```
