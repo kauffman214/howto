@@ -8,6 +8,11 @@ or
 useradd -m -r -s </path/to/shell> -c "Management Account" <username>
 ```
 
+Set the password on the account.  Remove password login later.  This is used for interactive setup.
+```
+passwd <username>
+```
+
 Hide the account from interactive login (for desktop/ gui machines)
 ```
 sudo vi /var/lib/AccountsService/users/<username>
