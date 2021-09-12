@@ -30,4 +30,11 @@ or:
 
 Reboot
 
+
+To remove the user:
+```
+userdel -r <username>
+rm -v /var/lib/AccountsService/user/<username>
+```
+Restart session (ALT-F2 + r) or Reboot
  
