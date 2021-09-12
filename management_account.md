@@ -18,6 +18,10 @@ Add the following content.
 XSession=
 SystemAccount=true
 ```
-ALT-F2 end the letter r and hit enter to restart the login manager.
+Without reboot:
+ALT-F2 end the letter r and hit enter to restart the login manager.  Log out and login to verify.
+
+or:
+Reboot
 
  
