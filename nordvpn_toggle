@@ -1,0 +1,31 @@
+#!/usr/bin/bash
+
+### Verify nordvpn package is installed
+
+if [ $(dpkg-query -W -f='${Status}' nordvpn 2>/dev/null | grep -c "ok installed") -eq 0 ];
+then
+   echo "Nordvpn must be installed to continue."
+   exit;
+fi
+
+### Toggle VPN state based on current state
+
+# NF>1 is being used to trim empty lines returned for the print
+# NF is a variable whose value is the number of fields in the current record
+STATE=`nordvpn status | awk -F 'Status: ' '{print $2}'`
+
+if [[ "$STATE" == "Connected" ]]; then
+  while true; do
+	  read -p "Disconnect VPN? (y/n) " YN
+	  case $YN in
+		  [Yy]* ) nordvpn d; break;;
+		  [Nn]* ) echo "VPN Active"; exit;;
+		  * ) echo "Invalid selection. VPN remaining Active."; exit;;
+		esac
+  done
+else
+	echo "VPN Inactive"
+	read -p "Connect to location: " LOCATION
+  echo $LOCATION
+  nordvpn c $LOCATION
+fi
