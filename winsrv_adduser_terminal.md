@@ -12,9 +12,11 @@ PS C:\Users\Administrator> New-LocalUser -Name "Serverworld" `
 -PasswordNeverExpires `
 -AccountNeverExpires 
 ```
+```
 Name        Enabled Description
 ----        ------- -----------
 Serverworld True    Administrator of this Computer
+```
 
 // add [Serverworld] user to [Administrators] group
 ```
@@ -25,18 +27,20 @@ PS C:\Users\Administrator> Add-LocalGroupMember -Group "Administrators" -Member 
 ```
 PS C:\Users\Administrator> Get-LocalUser -Name Serverworld 
 ```
-
+```
 Name        Enabled Description
 ----        ------- -----------
 Serverworld True    Administrator of this Computer
 ```
+```
 PS C:\Users\Administrator> Get-LocalGroupMember -Group "Administrators" 
+```
 ```
 ObjectClass Name               PrincipalSource
 ----------- ----               ---------------
 User        RX-7\Administrator Local
 User        RX-7\Serverworld   Local
-
+```
 // if remove an user, do like follows
 ```
 PS C:\Users\Administrator> Remove-LocalUser -Name "Serverworld" 
