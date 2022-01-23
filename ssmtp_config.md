@@ -1,7 +1,7 @@
-// ssmtp is a simple replacemnt for sending SMTP based E-mails through another E-mail provider (e.g. GMail)
-// This will remove Postfix on Ubuntu
-// To get the system to use the ssmtp gateway, mailx will also need to be configured to send the right values when it is called so SSMTP can act appropriately.
-// bsd-mailx is the default on ubuntu 20 LTS and Should be installed already
+- ssmtp is a simple replacemnt for sending SMTP based E-mails through another E-mail provider (e.g. GMail)
+- This will remove Postfix on Ubuntu
+- To get the system to use the ssmtp gateway, mailx will also need to be configured to send the right values when it is called so SSMTP can act appropriately.
+- bsd-mailx is the default on ubuntu 20 LTS and Should be installed already
 
 ```
 sudo apt-get install ssmtp bsd-mailx
